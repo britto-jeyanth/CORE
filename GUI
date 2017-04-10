@@ -16,28 +16,33 @@ class Window(Frame):
         self.master.title("GUI")
         self.pack(fill=BOTH, expand=1)
         StartButton = Button(self, text="Start", command = self.options, width = 100)
-        StartButton.place(relx=0.5, rely=0.5, anchor=CENTER)
+        StartButton.place(relx=0.5, rely=0.1, anchor=CENTER)
         QuitButton = Button(self, text="Quit", command = self.quit, width = 100)
-        QuitButton.place(relx=0.5, rely=.65, anchor=CENTER)
+        QuitButton.place(relx=0.5, rely=.9, anchor=CENTER)
 
         
     def options(self):
         StartButton = Button(self, text="Start", state = DISABLED, width = 100)
-        StartButton.place(relx=0.5, rely=0.5, anchor=CENTER)
-        v = IntVar()
-        v.set(1)
-        modes = [
-            ("Depth First", 1),
-            ("Left Hand Follower", 2),
-            ("Right Hand Follower", 3)
-            ]
-        Label(root, text="""Pick a Method:""", justify =LEFT, padx = 20).pack()
-        #self.master.title("GUI")
-        #self.pack(fill=BOTH, expand=1)
-        for txt, val in modes:
-            Radiobutton(root, text=txt, indicatoron = 0, width = 50,\
-            variable = v, command=v.get(), value=val).pack(anchor=CENTER)
-            
+        StartButton.place(relx=0.5, rely=0.1, anchor=CENTER)
+        
+        DFButton = Button(self, text="Depth First", command = self.DepthFirst, width = 100)
+        DFButton.place(relx=0.5, rely=0.4, anchor=CENTER)
+        
+        LHFButton = Button(self, text="Left Hand Follower", command = self.LeftHandFollower, width = 100)
+        LHFButton.place(relx=0.5, rely=0.5, anchor=CENTER)
+        
+        RHButton = Button(self, text="Start", command = self.RightHandFollower , width = 100)
+        RHButton.place(relx=0.5, rely=0.6, anchor=CENTER)
+        
+    def DepthFirst(self):
+        print("Depth First") 
+        
+    def LeftHandFollower(self):
+        print("Left Hand Follower")
+        
+    def RightHandFollower(self):
+        print("Right Hand Follower")
+        
     def quit(self):
         exit()
         
@@ -46,3 +51,4 @@ root.geometry("900x800")
 app = Window(root)
 root.mainloop()
         
+
