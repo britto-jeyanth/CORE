@@ -31,7 +31,7 @@ class Window(Frame):
         LHFButton = Button(self, text="Left Hand Follower", command = self.LeftHandFollower, width = 100)
         LHFButton.place(relx=0.5, rely=0.5, anchor=CENTER)
         
-        RHButton = Button(self, text="Start", command = self.RightHandFollower , width = 100)
+        RHButton = Button(self, text="Right Hand Follower", command = self.RightHandFollower , width = 100)
         RHButton.place(relx=0.5, rely=0.6, anchor=CENTER)
         
     def DepthFirst(self):
@@ -51,4 +51,5 @@ root.geometry("900x800")
 app = Window(root)
 root.mainloop()
         
+
 
