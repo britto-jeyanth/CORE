@@ -1,0 +1,48 @@
+# To change this license header, choose License Headers in Project Properties.
+# To change this template file, choose Tools | Templates
+# and open the template in the editor.
+
+from tkinter import *
+import os
+
+class Window(Frame):
+    
+    def __init__(self, master = None):
+        Frame.__init__(self, master)
+        self.master = master
+        self.init_window()
+
+    def init_window(self):
+        self.master.title("GUI")
+        self.pack(fill=BOTH, expand=1)
+        StartButton = Button(self, text="Start", command = self.options, width = 100)
+        StartButton.place(relx=0.5, rely=0.5, anchor=CENTER)
+        QuitButton = Button(self, text="Quit", command = self.quit, width = 100)
+        QuitButton.place(relx=0.5, rely=.65, anchor=CENTER)
+
+        
+    def options(self):
+        StartButton = Button(self, text="Start", state = DISABLED, width = 100)
+        StartButton.place(relx=0.5, rely=0.5, anchor=CENTER)
+        v = IntVar()
+        v.set(1)
+        modes = [
+            ("Depth First", 1),
+            ("Left Hand Follower", 2),
+            ("Right Hand Follower", 3)
+            ]
+        Label(root, text="""Pick a Method:""", justify =LEFT, padx = 20).pack()
+        #self.master.title("GUI")
+        #self.pack(fill=BOTH, expand=1)
+        for txt, val in modes:
+            Radiobutton(root, text=txt, indicatoron = 0, width = 50,\
+            variable = v, command=v.get(), value=val).pack(anchor=CENTER)
+            
+    def quit(self):
+        exit()
+        
+root = Tk()
+root.geometry("900x800")
+app = Window(root)
+root.mainloop()
+        
