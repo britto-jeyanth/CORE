@@ -20,6 +20,7 @@ class Window(Frame):
         QuitButton = Button(self, text="Quit", command = self.quit, width = 100)
         QuitButton.place(relx=0.5, rely=.9, anchor=CENTER)
 
+
         
     def options(self):
         StartButton = Button(self, text="Start", state = DISABLED, width = 100)
@@ -47,9 +48,13 @@ class Window(Frame):
         exit()
         
 root = Tk()
+
+text1 = Text(root, height=15, width =30)
+photo = PhotoImage(file='./song.gif')
+text1.insert(END,'\n')
+text1.image_create(END, image=photo)
+text1.pack(side = TOP)
 root.geometry("900x800")
 app = Window(root)
 root.mainloop()
-        
-
 
