@@ -14,7 +14,7 @@ class Window(Frame):
         self.init_window()
 
     def init_window(self):
-        self.master.title("CSEE 4240: Wireless Sensor Networks")
+        self.master.title("Micromouse Project")
         self.pack(fill=BOTH, expand=1)
         StartButton = Button(self, text="Start", command = self.options, width = 50, bg = "white", font=("Helvetica", 10))
         StartButton.place(relx=0.5, rely=0.1, anchor=CENTER)
@@ -27,16 +27,16 @@ class Window(Frame):
         StartButton.place(relx=0.5, rely=0.1, anchor=CENTER)
         
         DFButton = Button(self, text="Depth First", command = self.DepthFirst, width = 25, bg = "white", font=("Helvetica", 10))
-        DFButton.place(relx=0.5, rely=0.3, anchor=CENTER)
+        DFButton.place(relx=0.5, rely=0.33, anchor=CENTER)
         
         LHFButton = Button(self, text="Left Hand Follower", command = self.LeftHandFollower, width = 25, bg = "white", font=("Helvetica", 10))
-        LHFButton.place(relx=0.5, rely=0.4, anchor=CENTER)
+        LHFButton.place(relx=0.5, rely=0.45, anchor=CENTER)
         
         RHButton = Button(self, text="Right Hand Follower", command = self.RightHandFollower , width = 25, bg = "white", font=("Helvetica", 10))
-        RHButton.place(relx=0.5, rely=0.5, anchor=CENTER)
+        RHButton.place(relx=0.5, rely=0.57, anchor=CENTER)
         
         WebButton = Button(root, text="Webpage", command = self.OpenUrl, width = 25, bg = "white", font=("Helvetica", 10))
-        WebButton.place(relx=0.5, rely=.85, anchor=CENTER)
+        WebButton.place(relx=0.5, rely=.87, anchor=CENTER)
         
     def OpenUrl(self):
         webbrowser.open_new(url)
@@ -67,13 +67,10 @@ photo = PhotoImage(file='./georgia.gif')
 text1.insert(INSERT,'')
 text1.image_create(END, image=photo)
 text1.pack(side = TOP)
-#root.geometry("700x600")
-w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-root.overrideredirect(1)
-root.geometry("%dx%d+0+0" % (w, h))
-root.focus_set() # <-- move focus to this widget
+root.geometry("700x600")
 root.bind("<Escape>", lambda e: e.widget.quit())
 app = Window(root)
 root.configure(background='black')
 root.mainloop()
         
+
