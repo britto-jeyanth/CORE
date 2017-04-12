@@ -402,7 +402,7 @@ for line in file.readlines():
     arr.append(arr1)
 
 window = Tk()
-canvas = Canvas(window, width=500, height=700)
+canvas = Canvas(window, width=500, height=500)
 canvas.pack()
 side = width / (len(arr)-2)
 
@@ -418,8 +418,8 @@ mouse3 = Mouse3(42, 745,3,arr)
 mouse4 = Mouse1(1122, 745, 4,arr)
 
 os.system("coresendmsg node number=5 icon=/home/jey/Documents/pics/song.png")
-os.system("coresendmsg node number=4 icon=/home/jey/Documents/pics/tim.png")
-os.system("coresendmsg node number=3 icon=/home/jey/Documents/pics/chase.png")
+os.system("coresendmsg node number=3 icon=/home/jey/Documents/pics/tim.png")
+os.system("coresendmsg node number=4 icon=/home/jey/Documents/pics/chase.png")
 os.system("coresendmsg node number=2 icon=/home/jey/Documents/pics/raja.png")
 os.system("coresendmsg node number=1 icon=/home/jey/Documents/pics/jey.png")
 while(1):
