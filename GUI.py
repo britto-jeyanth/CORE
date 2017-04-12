@@ -2,7 +2,7 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-from tkinter import *
+from Tkinter import *
 import os
 import webbrowser
 
@@ -43,19 +43,19 @@ class Window(Frame):
         
         
     def DepthFirst(self):
-        print("Depth First") 
+        os.system("python /home/jey/Documents/depth_first_main.py") 
         
     def LeftHandFollower(self):
-        print("Left Hand Follower")
+        os.system("python /home/jey/Documents/leftwall_follower_main.py")
         
     def RightHandFollower(self):
-        print("Right Hand Follower")
+        os.system("python /home/jey/Documents/rightwall_follower_main.py")
         
     def quit(self):
         exit()
         
 root = Tk()
-url = 'http://sensornetworks.engr.uga.edu/micro_mouse/pages/index.html'
+url = 'http://sensornetworks.engr.uga.edu/micro_mouse/pages/mouse1.html'
 text = Text(root, height=1, width =31, bg = "black", fg = "white", font=("Helvetica", 16))
 text.insert(INSERT, "CSEE 4240: Wireless Sensor Networks")
 text.insert(END, "\n")
@@ -72,5 +72,3 @@ root.bind("<Escape>", lambda e: e.widget.quit())
 app = Window(root)
 root.configure(background='black')
 root.mainloop()
-        
-
