@@ -2,6 +2,10 @@ from random import *
 from Tkinter import *
 import os
 import time
+import requests
+import json
+import numpy as np
+
 
 width=500
 height=500
@@ -69,10 +73,15 @@ def updateMaze(mouse):
 
 def updateCanvas(mous1,mous2,mous3,mous4):
 	combArr = []
-	for num in range(0,33):
-		combArr.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-	for num1 in range(0,33):
-		for num2 in range(0,33):
+	for num in range(0,len(arr)):
+		comb=[]
+		for num1 in range(0,len(arr[1])):
+			comb.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		combArr.append(comb)	
+	
+	for num1 in range(0,len(combArr)):
+		for num2 in range(0,len(combArr[0])):
 			if(mous1.map[num1][num2]==1):
 				combArr[num1][num2]=1
 			elif(mous2.map[num1][num2]==1):
@@ -81,8 +90,8 @@ def updateCanvas(mous1,mous2,mous3,mous4):
 				combArr[num1][num2]=1
 			elif(mous4.map[num1][num2]==1):
 				combArr[num1][num2]=1
-	for row in range(0, 33):
-		for col in range(0, 33):
+	for row in range(0, len(combArr)):
+		for col in range(0, len(combArr[0])):
 			x = (col - 1) * side
 			y = (row - 1) * side
 			if(row==mous1.y and col==mous1.x):
@@ -98,6 +107,7 @@ def updateCanvas(mous1,mous2,mous3,mous4):
             		else:
                 		drawSquare(canvas, x, y, side, 'red')
     	canvas.update()
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap5.php?map='+str(combArr))
 
 def drawSquare(canvas, x, y, side, color):
     id = canvas.create_rectangle(x, y, x + side, y + side, fill=color)
@@ -117,7 +127,7 @@ class Mouse:
     path=[]
     centerx = 0
     centery = 0
-    def __init__(self, xpos, ypos, idM):
+    def __init__(self, xpos, ypos, idM, arr):
 	os.system("coresendmsg node number="+str(idM)+" xpos="+str(xpos)+" ypos="+str(ypos))        
 	self.xpos = xpos
         self.ypos = ypos
@@ -125,8 +135,12 @@ class Mouse:
         self.strx= xpos
         self.stry= ypos
 	self.map= []
-	for num in range(0,33):
-		self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+	for num in range(0,len(arr)):
+		map1=[]
+		for num1 in range(0,len(arr[1])):
+			map1.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		self.map.append(map1)
 	
         if idM==1:
             self.x=1
@@ -182,7 +196,7 @@ class Mouse1:
     path=[]
     centerx = 0
     centery = 0
-    def __init__(self, xpos, ypos, idM):
+    def __init__(self, xpos, ypos, idM, arr):
 	os.system("coresendmsg node number="+str(idM)+" xpos="+str(xpos)+" ypos="+str(ypos))        
 	self.xpos = xpos
         self.ypos = ypos
@@ -190,8 +204,12 @@ class Mouse1:
         self.strx= xpos
         self.stry= ypos
 	self.map= []
-	for num in range(0,33):
-		self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+	for num in range(0,len(arr)):
+		map1=[]
+		for num1 in range(0,len(arr[1])):
+			map1.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		self.map.append(map1)
 
         if idM==1:
             self.x=1
@@ -247,7 +265,7 @@ class Mouse2:
     path=[]
     centerx = 0
     centery = 0
-    def __init__(self, xpos, ypos, idM):
+    def __init__(self, xpos, ypos, idM, arr):
 	os.system("coresendmsg node number="+str(idM)+" xpos="+str(xpos)+" ypos="+str(ypos))        
 	self.xpos = xpos
         self.ypos = ypos
@@ -255,8 +273,12 @@ class Mouse2:
         self.strx= xpos
         self.stry= ypos
 	self.map= []
-	for num in range(0,33):
-		self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+	for num in range(0,len(arr)):
+		map1=[]
+		for num1 in range(0,len(arr[1])):
+			map1.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		self.map.append(map1)
 
         if idM==1:
             self.x=1
@@ -312,7 +334,7 @@ class Mouse3:
     path=[]
     centerx = 0
     centery = 0
-    def __init__(self, xpos, ypos, idM):
+    def __init__(self, xpos, ypos, idM,arr):
 	os.system("coresendmsg node number="+str(idM)+" xpos="+str(xpos)+" ypos="+str(ypos))        
 	self.xpos = xpos
         self.ypos = ypos
@@ -320,9 +342,12 @@ class Mouse3:
         self.strx= xpos
         self.stry= ypos
 	self.map= []
-	for num in range(0,33):
-		self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-
+	for num in range(0,len(arr)):
+		map1=[]
+		for num1 in range(0,len(arr[1])):
+			map1.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		self.map.append(map1)
         if idM==1:
             self.x=1
             self.y=1
@@ -366,6 +391,7 @@ class Mouse3:
 
 file = open("maze.txt", 'r')
 arr = []
+
 for line in file.readlines():
     arr1 = []
     for c in line:
@@ -376,7 +402,7 @@ for line in file.readlines():
     arr.append(arr1)
 
 window = Tk()
-canvas = Canvas(window, width=width, height=height)
+canvas = Canvas(window, width=500, height=700)
 canvas.pack()
 side = width / (len(arr)-2)
 
@@ -386,10 +412,16 @@ side = width / (len(arr)-2)
 #visitedX=[]
 #visitedY=[]
 #path=[]
-mouse1 = Mouse(42, 25, 1)
-mouse2 = Mouse2(1122,25,2)
-mouse3 = Mouse3(42, 745,3)
-mouse4 = Mouse1(1122, 745, 4)
+mouse1 = Mouse(42, 25, 1, arr)
+mouse2 = Mouse2(1122,25,2,arr)
+mouse3 = Mouse3(42, 745,3,arr)
+mouse4 = Mouse1(1122, 745, 4,arr)
+
+os.system("coresendmsg node number=5 icon=/home/jey/Documents/pics/song.png")
+os.system("coresendmsg node number=4 icon=/home/jey/Documents/pics/tim.png")
+os.system("coresendmsg node number=3 icon=/home/jey/Documents/pics/chase.png")
+os.system("coresendmsg node number=2 icon=/home/jey/Documents/pics/raja.png")
+os.system("coresendmsg node number=1 icon=/home/jey/Documents/pics/jey.png")
 while(1):
 	mouse1.visitedX.append(mouse1.x)
 	mouse1.visitedY.append(mouse1.y)
@@ -412,26 +444,23 @@ while(1):
 		depthFirst(mouse1,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse4.x,mouse4.y)
 		depthFirst1(mouse2,mouse1.x,mouse1.y,mouse3.x,mouse3.y,mouse4.x,mouse4.y)
 		depthFirst(mouse3,mouse2.x,mouse2.y,mouse1.x,mouse1.y,mouse4.x,mouse4.y)
-		depthFirst1(mouse4,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse1.x,mouse1.y)	
-	'''elif(arr[mouse1.y][mouse1.x+1] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x+1,mouse1.y)):		
-		mouse1.right()
-		mouse1.path.append("right")
-	elif(arr[mouse1.y+1][mouse1.x] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x,mouse1.y+1)):
-		mouse1.backward()
-		mouse1.path.append("down")
-	elif (arr[mouse1.y][mouse1.x-1] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x-1,mouse1.y)):
-		mouse1.left()
-		mouse1.path.append("left")
-	elif(arr[mouse1.y-1][mouse1.x] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x,mouse1.y-1)):
-		mouse1.forward()
-		mouse1.path.append("up")
-	else:
-		reverse(mouse1.path,mouse1)'''
+		depthFirst1(mouse4,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse1.x,mouse1.y)
+	
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap.php?map='+str(mouse1.map))	
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap2.php?map='+str(mouse2.map))
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap3.php?map='+str(mouse3.map))
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap4.php?map='+str(mouse4.map))
 combArr = []
-for num in range(0,33):
-	combArr.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-for num1 in range(0,33):
-	for num2 in range(0,33):
+for num in range(0,len(arr)):
+		comb=[]
+		for num1 in range(0,len(arr[1])):
+			comb.append(0)
+			#self.map.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+		combArr.append(comb)
+#for num in range(0,33):
+	#combArr.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+for num1 in range(0,len(combArr)):
+	for num2 in range(0,len(combArr[0])):
 		if(mouse1.map[num1][num2]==1):
 			combArr[num1][num2]=1
 		elif(mouse2.map[num1][num2]==1):
@@ -440,11 +469,22 @@ for num1 in range(0,33):
 			combArr[num1][num2]=1
 		elif(mouse4.map[num1][num2]==1):
 			combArr[num1][num2]=1
-print("mapped array")
-for row in combArr:
-	print(row)
+
+comp1 = np.array(combArr)
+comp2 = np.array(arr)
+
+error = np.mean(comp2 != comp1)
+percent=(1-error)*100
+label = Label(window, text="Mapped Out: "+str(percent)+"% of the Maze")
+label.place(relx=0.25,rely=0.85)
+
+#print("mapped array")
+#for row in combArr:
+	#print(row)
+
 
 window.mainloop()
+#window2 
 #for num in range(0,31):
 #	time.sleep(0.25)
 #	mouse1.right()
