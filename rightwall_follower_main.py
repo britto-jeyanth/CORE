@@ -2,6 +2,9 @@ from random import *
 from Tkinter import *
 import os
 import time
+import requests
+import json
+import numpy as np
 
 width=500
 height=500
@@ -101,6 +104,7 @@ def updateCanvas(mous1,mous2,mous3,mous4):
             		else:
                 		drawSquare(canvas, x, y, side, 'red')
     	canvas.update()
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap5.php?map='+str(combArr))
 
 def drawSquare(canvas, x, y, side, color):
     id = canvas.create_rectangle(x, y, x + side, y + side, fill=color)
@@ -401,7 +405,16 @@ mouse3 = Mouse3(42, 745,3)
 mouse3.direc="left"
 mouse4 = Mouse1(1122, 745, 4)
 mouse4.direc="down"
-while(1):
+
+os.system("coresendmsg node number=5 icon=/home/jey/Documents/pics/song.png")
+os.system("coresendmsg node number=3 icon=/home/jey/Documents/pics/tim.png")
+os.system("coresendmsg node number=4 icon=/home/jey/Documents/pics/chase.png")
+os.system("coresendmsg node number=2 icon=/home/jey/Documents/pics/raja.png")
+os.system("coresendmsg node number=1 icon=/home/jey/Documents/pics/jey.png")
+
+count = 0
+while(count<200):
+	count=count+1
 	mouse1.visitedX.append(mouse1.x)
 	mouse1.visitedY.append(mouse1.y)
 	mouse4.visitedX.append(mouse4.x)
@@ -418,26 +431,18 @@ while(1):
 	updateCanvas(mouse1,mouse2,mouse3,mouse4)
 	#time.sleep(0.25)
 	if(mouse1.x==mouse1.centerx and mouse1.y==mouse1.centery and mouse2.x==mouse2.centerx and mouse2.y==mouse2.centery and mouse3.x==mouse3.centerx and mouse3.y==mouse3.centery and mouse4.x==mouse4.centerx and mouse4.y==mouse4.centery):
-		break
+		break	
 	else:
 		rightFollow(mouse1,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse4.x,mouse4.y)
 		rightFollow(mouse2,mouse1.x,mouse1.y,mouse3.x,mouse3.y,mouse4.x,mouse4.y)
 		rightFollow(mouse3,mouse2.x,mouse2.y,mouse1.x,mouse1.y,mouse4.x,mouse4.y)
-		rightFollow(mouse4,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse1.x,mouse1.y)	
-	'''elif(arr[mouse1.y][mouse1.x+1] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x+1,mouse1.y)):		
-		mouse1.right()
-		mouse1.path.append("right")
-	elif(arr[mouse1.y+1][mouse1.x] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x,mouse1.y+1)):
-		mouse1.backward()
-		mouse1.path.append("down")
-	elif (arr[mouse1.y][mouse1.x-1] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x-1,mouse1.y)):
-		mouse1.left()
-		mouse1.path.append("left")
-	elif(arr[mouse1.y-1][mouse1.x] and inVisited(mouse1.visitedX,mouse1.visitedY,mouse1.x,mouse1.y-1)):
-		mouse1.forward()
-		mouse1.path.append("up")
-	else:
-		reverse(mouse1.path,mouse1)'''
+		rightFollow(mouse4,mouse2.x,mouse2.y,mouse3.x,mouse3.y,mouse1.x,mouse1.y)
+	
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap.php?map='+str(mouse1.map))	
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap2.php?map='+str(mouse2.map))
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap3.php?map='+str(mouse3.map))
+	r = requests.get('http://sensornetworks.engr.uga.edu/micro_mouse/pages/addMap4.php?map='+str(mouse4.map))
+
 combArr = []
 for num in range(0,33):
 	combArr.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -451,9 +456,14 @@ for num1 in range(0,33):
 			combArr[num1][num2]=1
 		elif(mouse4.map[num1][num2]==1):
 			combArr[num1][num2]=1
-print("mapped array")
-for row in combArr:
-	print(row)
+
+comp1 = np.array(combArr)
+comp2 = np.array(arr)
+
+error = np.mean(comp2 != comp1)
+percent=(1-error)*100
+label = Label(window, text="Mapped Out: "+str(percent)+"% of the Maze")
+label.place(relx=0.25,rely=0.85)
 
 window.mainloop()
 #for num in range(0,31):
